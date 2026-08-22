@@ -1,0 +1,148 @@
+# =============================================================================
+# Tooling caches, virtualenvs and editor state — machine-local, never shared
+# =============================================================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.ipynb_checkpoints/
+.venv/
+venv/
+# Linter/formatter/type-checker caches. `.ruff_cache/` was the gap: only the CACHEDIR.TAG inside it
+# happened to be excluded, so the directory itself would have shipped.
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.pyright/
+CACHEDIR.TAG
+# macOS / editor cruft
+.DS_Store
+.idea/
+.vscode/
+# Credentials / key material — never commit, even accidentally
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+credentials.json
+token.json
+.git-credentials
+
+# Local `langgraph dev` state (pickled threads/runs/assistants) — machine-specific, never shared
+.langgraph_api/
+large_tool_results/
+
+# Authoring notes and delivery material — useful while preparing a session, not part of the labs.
+# Leading slash is REQUIRED where used: a bare `AGENTS.md` matches at any depth and would exclude
+# day2/data/agent/AGENTS.md, which is workshop data the Deep Agent labs read at runtime.
+# README.md is the only Markdown file that ships (see the `!README.md` negation below). It carries
+# the full model-access content — both paths, setup, redaction, model tiers, troubleshooting — so
+# nothing in the labs ever points at a document that is not in the repo.
+#
+# NOTE: uv.lock is deliberately NOT ignored. It used to be — orphaned under this comment block,
+# which is about markdown authoring notes and has nothing to do with a lock file. Committing it is
+# both the convention in the comparable LangChain repos (langgraph-101, lca-lc-foundations,
+# langsmith-agent-lifecycle-workshop all track theirs) and what makes this repo's verification mean
+# anything: the labs were proven against langchain 1.3.15 / langchain-openai 1.4.3, and without the
+# lock `uv sync` resolves fresh and a participant can land on versions nobody tested.
+
+# =============================================================================
+# Documentation: README.md is the only doc in the repo
+# =============================================================================
+# Other root-level .md and .pdf files are authoring notes, kept out of the repo.
+*.md
+*.pdf
+!README.md
+
+# EXCEPTION — these are workshop DATA, not documentation. The labs read them at runtime:
+#   day1/data/kb/            13 vendor KB articles      → search_vendor_kb (RAG corpus)
+#   day1/data/kb_tickets/    12 IT support articles     → search_kb (RAG corpus)
+#   day1/data/prompt*.md     system prompts             → utils.prompts fallback
+#   day1/data/pdfs/          13 capability statements   → parse_vendor_pdf
+#   day2/data/agent/         AGENTS.md + SKILL.md       → MemoryMiddleware / SkillsMiddleware
+#   day2/data/wiki/          durable notes              → the wiki-memory lab
+# Ignoring these would break every RAG lab and the Deep Agent. Keep the negations.
+!day1/data/**/*.md
+!day1/data/**/*.pdf
+!day2/data/**/*.md
+# …but NOT the wiki notes the agent writes at runtime. `open_questions.md` and `risk_signals.md` are
+# seeded fixtures and ship; `wiki/vendors/` is generated output, and shipping a previous run's notes
+# would mean Lab 02's "the agent starts cold" section is warm on a fresh clone.
+day2/data/wiki/vendors/
+# …and not the agent's scratch directory either. `!day2/data/**/*.md` above re-includes every .md
+# under day2/data/, which silently swept up files the deep agent writes mid-run
+# (day2/data/temp/quelmore_source_validation.md and friends). Output, not fixtures.
+day2/data/temp/
+!day3/data/**/*.md
+
+# =============================================================================
+# Local artifacts and authoring tooling — not workshop deliverables
+# =============================================================================
+# Agent output from earlier runs, machine-specific setup scripts, and prep tooling.
+# Nothing in the labs or README references these; a `git add -A` swept them in once.
+due_diligence_report_*.txt
+# Prep/one-off shell scripts are authoring tooling, never part of the labs.
+# Generic on purpose: naming the individual scripts would put internal filenames
+# in a published file. No .sh file ships, so a blanket rule costs nothing.
+*.sh
+generate_agenda_pdf.py
+# …and the fonts it embeds. Only that (internal) script reads them, so shipping ~8 MB of
+# typefaces to the customer would be dead weight.
+.fonts/
+verify_rubric.py
+iso_validation_report.txt
+
+# Generated SQLite database — built from the committed JSON fixtures by
+# day1/src/ticket_db.py:build_database(), which rebuilds whenever the JSON is newer. Committing the
+# binary would let it drift silently from tickets.json/users.json, which are the source of truth.
+# tickets.db IS committed: participants get a working database on clone with no build step, matching
+# the reference workshop. It is byte-verified against tickets.json/users.json and its row text is
+# scanned by the compliance gate, so it is not an unreadable blob in the published tree.
+# `build_database()` still rebuilds it whenever either JSON is newer, so it cannot go stale.
+!day1/data/tickets.db
+day1/data/*.db-journal
+
+# Delivery/presenter material — not workshop content.
+*.html
+
+# Agent-written outputs — the labs regenerate these, so they must not ship.
+# The two wiki seeds stay tracked so day2/data/wiki/ exists in a fresh clone;
+# the agent's own notes underneath it do not.
+# The Day 2 deep agent writes its finished reports here, into a directory that also holds one
+# committed example. Ignore everything except that example: without this, a `git add -A` after a
+# lab run commits agent output (the sweep produced
+# `Final_Quelmore_Systems_Ltd_Due_Diligence_Report.md`, untracked and unignored).
+day2/data/due_diligence_reports/*
+!day2/data/due_diligence_reports/Quelmore_Systems_VND-001.md
+day2/data/due_diligence/
+day2/data/compliance_screening_results/
+
+# Maintainer verification tooling — for whoever maintains this repo, not for participants.
+# `verify_setup.py` DOES ship: a participant runs it before Lab 01 to prove their own credentials,
+# fixtures and RAG index work, and the README tells them to. The other two are for whoever maintains
+# this repo: verify_all.py scores the five dimensions and verify_execution.py drives the both-path
+# sweep across all 17 labs. A participant has no use for either, and shipping them invites someone to
+# run a 45-minute sweep against their own quota by accident.
+#
+# Their OUTPUT is excluded for a separate reason: sweep_results.txt records our machine's timings and
+# file hashes, so shipping it would present our run as the customer's, and would make the content
+# proof fail the moment they edit a lab.
+verify_all.py
+verify_execution.py
+sweep_results.txt
+.sweep_logs/
+.env.sweep-backup
+
+# Logs, wherever they land. `langgraph dev` writes them, the sweep writes them, and a stray one
+# swept in by `git add -A` would ship workspace IDs and trace URLs to the customer.
+*.log
+*.log.*
+
+# Internal prep docs — never publish (the blanket *.md rule above already covers
+# these, but name them explicitly so the protection survives an edit to that rule).
+workshop-agenda.md
+AGENTS.md
+VALIDATION.md

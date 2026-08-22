@@ -1,0 +1,118 @@
+[
+  {
+    "vendor_id": "VND-001",
+    "vendor_name": "Quelmore Systems",
+    "procurement_need": "Secure field communications system",
+    "assessment_date": "2026-08-10",
+    "evidence": [
+      {
+        "claim": "Quelmore holds Acme QS-100 certification for quality management",
+        "source": "kb/quelmore_systems.md",
+        "status": "verified",
+        "quality": "high"
+      },
+      {
+        "claim": "Quelmore has delivered 3 enterprise communications contracts in the past 5 years",
+        "source": "vendors.json (contract_history)",
+        "status": "verified",
+        "quality": "high"
+      },
+      {
+        "claim": "Quelmore provides 24/7 maintenance support with 4-hour response time",
+        "source": "pdfs/quelmore_systems_ltd_capability_statement.pdf",
+        "status": "partially_verified",
+        "quality": "medium",
+        "note": "PDF states '24/7 support' but does not specify response time SLA"
+      }
+    ],
+    "risk_signals": [
+      {
+        "signal": "No financial statements provided",
+        "severity": "medium",
+        "mitigation": "Request audited financial statements before contract award"
+      }
+    ],
+    "suitability": "high",
+    "confidence": "medium",
+    "requires_human_review": false,
+    "source_validation_status": "partially_complete",
+    "notes": "Strong candidate for field communications. QS-100 verified. Maintenance SLA needs clarification."
+  },
+  {
+    "vendor_id": "VND-013",
+    "vendor_name": "Kelbrant Trading Consortium",
+    "procurement_need": "Cybersecurity consulting services",
+    "assessment_date": "2026-08-12",
+    "evidence": [
+      {
+        "claim": "Kelbrant Trading offers cybersecurity consulting with export-control clearance",
+        "source": "kb/kelbrant_trading.md",
+        "status": "unverified",
+        "quality": "low",
+        "note": "KB article claims export-control clearance but no certification number provided"
+      },
+      {
+        "claim": "Kelbrant Trading is not on any sanctions list",
+        "source": "sanctions_list.json",
+        "status": "contradicted",
+        "quality": "high",
+        "note": "VND-013 is on EU and US sanctions lists — SANCTIONED"
+      }
+    ],
+    "risk_signals": [
+      {
+        "signal": "Vendor is on EU and US sanctions lists",
+        "severity": "critical",
+        "mitigation": "Do not proceed — vendor is sanctioned"
+      },
+      {
+        "signal": "Unverified export-control clearance claim",
+        "severity": "high",
+        "mitigation": "Request certification documentation"
+      }
+    ],
+    "suitability": "low",
+    "confidence": "high",
+    "requires_human_review": true,
+    "source_validation_status": "sanctions_hit",
+    "notes": "BLOCKED: Vendor is sanctioned. Do not proceed with any engagement. Report to compliance."
+  },
+  {
+    "vendor_id": "VND-005",
+    "vendor_name": "Thalveyn Comms Group",
+    "procurement_need": "Satellite communications equipment",
+    "assessment_date": "2026-08-14",
+    "evidence": [
+      {
+        "claim": "Thalveyn Comms holds ISO 9001 and QS-100 certifications",
+        "source": "kb/thalveyn_comms.md",
+        "status": "verified",
+        "quality": "high"
+      },
+      {
+        "claim": "Thalveyn Comms delivered satellite comms for Telecommunications network operator",
+        "source": "vendors.json (contract_history)",
+        "status": "verified",
+        "quality": "high"
+      },
+      {
+        "claim": "Thalveyn Comms has export control compliance program",
+        "source": "pdfs/thalveyn_comms_group_capability_statement.pdf",
+        "status": "verified",
+        "quality": "medium"
+      }
+    ],
+    "risk_signals": [
+      {
+        "signal": "Limited experience outside Scandinavia",
+        "severity": "low",
+        "mitigation": "Assess capability for Acme-wide deployment"
+      }
+    ],
+    "suitability": "high",
+    "confidence": "high",
+    "requires_human_review": false,
+    "source_validation_status": "complete",
+    "notes": "Strong candidate for satellite communications. All claims verified. Low risk profile."
+  }
+]

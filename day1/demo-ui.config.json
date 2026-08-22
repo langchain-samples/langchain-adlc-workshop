@@ -1,0 +1,29 @@
+{
+  "title": "Acme Ticket Resolution",
+  "subtitle": "Resolve IT support tickets — cited, authorization-checked, human-approved when sensitive",
+  "graphId": "ticket_agent",
+  "hitlGraphId": "ticket_agent_hitl",
+  "deploymentUrl": "http://localhost:2024",
+  "examplePrompts": [
+    "My VPN keeps disconnecting every few minutes when I work from home. What should I check?",
+    "Marco Rossi (USR-002) replaced his phone and his MFA token isn't working — he's locked out. Verify his context and reset his MFA.",
+    "I'm locked out of my account and need an MFA reset. My user ID is USR-004.",
+    "How many P1 tickets are still open, and which department raises the most access tickets?",
+    "Something is wrong with my computer."
+  ],
+  "accent": "#006DDD",
+  "showTraceLink": true,
+  "toolLabels": {
+    "search_kb": "IT Support KB",
+    "search_ticket_history": "Ticket History",
+    "get_user_context": "User Context",
+    "mock_api_action": "Identity API",
+    "tavily_search": "Web"
+  },
+  "_wired": "Wired: graphId / hitlGraphId / deploymentUrl (-> UI env) and title / subtitle / examplePrompts / accent (-> header, welcome, prompt chips). Reserved: toolLabels. Setup steps are in the README, under 'A browser chat UI for end users'.",
+  "promptNotes": {
+    "2": "fires the human-approval gate (USR-002 is authorised for 'access')",
+    "3": "refused on authorization (USR-004 is a viewer, 'knowledge' only)",
+    "4": "answered from the SQL ticket database, not the KB"
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "user_id": "USR-001",
+    "name": "Ana Costa",
+    "email": "ana.costa@acme.example",
+    "department": "IT Operations",
+    "role": "admin",
+    "permissions": ["access", "knowledge", "software", "hardware", "network", "account", "security"]
+  },
+  {
+    "user_id": "USR-002",
+    "name": "Marco Rossi",
+    "email": "marco.rossi@acme.example",
+    "department": "Engineering",
+    "role": "agent",
+    "permissions": ["access", "knowledge", "software", "hardware"]
+  },
+  {
+    "user_id": "USR-003",
+    "name": "Ingrid Johansson",
+    "email": "ingrid.johansson@acme.example",
+    "department": "Procurement",
+    "role": "agent",
+    "permissions": ["knowledge", "software"]
+  },
+  {
+    "user_id": "USR-004",
+    "name": "Lukas Meyer",
+    "email": "lukas.meyer@acme.example",
+    "department": "Logistics",
+    "role": "viewer",
+    "permissions": ["knowledge"]
+  },
+  {
+    "user_id": "USR-005",
+    "name": "Sofia Petrov",
+    "email": "sofia.petrov@acme.example",
+    "department": "Communications",
+    "role": "agent",
+    "permissions": ["access", "network", "account"]
+  }
+]

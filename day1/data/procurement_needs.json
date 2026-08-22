@@ -1,0 +1,62 @@
+[
+  {
+    "need_id": "NEED-001",
+    "title": "Secure field communications system",
+    "description": "Procure encrypted field communication equipment for field operations. Must be Acme-compatible, with secure encryption protocols and ruggedized hardware for deployment in varied environmental conditions.",
+    "category": "Cybersecurity & IT",
+    "requirements": ["Acme QS-100 certification", "ISO 27001", "Acme-approved personnel", "Ruggedized hardware"],
+    "budget_eur": 3000000,
+    "deadline": "2025-09-30",
+    "priority": "high"
+  },
+  {
+    "need_id": "NEED-002",
+    "title": "Avionics maintenance kits",
+    "description": "Supply of avionics maintenance kits for multi-platform aircraft fleets. Kits must include diagnostic tools, replacement components, and technical documentation compliant with AS9100D standards.",
+    "category": "Aerospace & Industrial",
+    "requirements": ["AS9100D certification", "Previous contract experience with a tier-1 buyer", "EU-based supply chain"],
+    "budget_eur": 2500000,
+    "deadline": "2025-12-15",
+    "priority": "medium"
+  },
+  {
+    "need_id": "NEED-003",
+    "title": "Multimodal transport and logistics services",
+    "description": "Multimodal transport services for equipment movement across Acme member states. Must include cold chain capability for medical supplies and hazardous materials handling certification.",
+    "category": "Logistics & Transport",
+    "requirements": ["AEO certification", "Cold chain capability", "Hazardous materials handling"],
+    "budget_eur": 3500000,
+    "deadline": "2025-10-31",
+    "priority": "high"
+  },
+  {
+    "need_id": "NEED-004",
+    "title": "Autonomous infrastructure inspection system",
+    "description": "Procure autonomous inspection robotic systems for pipeline and storage-tank surveys. Systems must demonstrate field-tested reliability and include maintenance support contracts.",
+    "category": "Aerospace & Industrial",
+    "requirements": ["Prior enterprise contract experience", "Autonomous operation capability", "Maintenance support available"],
+    "budget_eur": 2000000,
+    "deadline": "2025-11-30",
+    "priority": "high"
+  },
+  {
+    "need_id": "NEED-005",
+    "title": "Facility security upgrade — Netherlands site",
+    "description": "Upgrade physical security infrastructure at Acme headquarters campus. Includes access control systems, perimeter monitoring, and environmental remediation of legacy site areas.",
+    "category": "Infrastructure & Engineering",
+    "requirements": ["Netherlands-based or local presence", "ISO 14001 environmental certification", "Personnel vetting capability"],
+    "budget_eur": 1500000,
+    "deadline": "2026-03-31",
+    "priority": "medium"
+  },
+  {
+    "need_id": "NEED-006",
+    "title": "Vague procurement need",
+    "description": "We need some IT stuff for the office. Not sure about the exact requirements yet.",
+    "category": "Cybersecurity & IT",
+    "requirements": [],
+    "budget_eur": null,
+    "deadline": null,
+    "priority": "low"
+  }
+]

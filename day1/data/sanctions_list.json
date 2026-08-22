@@ -1,0 +1,114 @@
+{
+  "_note": "SYNTHETIC / FICTIONAL screening list for the workshop. No real entities, no real people, and no real sanctions programmes — every name, programme code and source here is invented. In production this is replaced by a real screening feed (a commercial screening provider); see screen_vendor's OpenSanctions API path.",
+  "sanctioned_entities": [
+    {
+      "entity_id": "SAN-001",
+      "name": "Kelbrant Trading Consortium",
+      "schema": "Company",
+      "country": "Non-EU jurisdiction D",
+      "programs": [
+        "SYNTH-PROG-01",
+        "SYNTH-PROG-02",
+        "SYNTH-PROG-03"
+      ],
+      "topics": [
+        "sanction",
+        "debarment"
+      ],
+      "reason": "State-owned enterprise involved in restricted-goods trade for sanctioned programs",
+      "listed_date": "2022-03-15",
+      "source": "Synthetic list (stands in for a consolidated screening feed)"
+    },
+    {
+      "entity_id": "SAN-002",
+      "name": "Sorbrek Export Group",
+      "schema": "Company",
+      "country": "Non-EU jurisdiction A",
+      "programs": [
+        "SYNTH-PROG-04",
+        "SYNTH-PROG-05"
+      ],
+      "topics": [
+        "sanction",
+        "export_control"
+      ],
+      "reason": "Unauthorized export of controlled goods to embargoed destinations",
+      "listed_date": "2022-06-20",
+      "source": "Synthetic list (stands in for a designated-entity feed)"
+    },
+    {
+      "entity_id": "SAN-003",
+      "name": "Ondrelle Industries",
+      "schema": "Company",
+      "country": "Non-EU jurisdiction B",
+      "programs": [
+        "SYNTH-PROG-06",
+        "SYNTH-PROG-07",
+        "SYNTH-PROG-08"
+      ],
+      "topics": [
+        "sanction",
+        "debarment",
+        "export_control"
+      ],
+      "reason": "Procurement of export-controlled goods in breach of restrictions",
+      "listed_date": "2019-11-04",
+      "source": "Synthetic list (stands in for an international screening feed)"
+    },
+    {
+      "entity_id": "SAN-004",
+      "name": "John Doe",
+      "schema": "Person",
+      "country": "Non-EU jurisdiction D",
+      "programs": [
+        "SYNTH-PROG-01",
+        "SYNTH-PROG-02"
+      ],
+      "topics": [
+        "sanction",
+        "role.pep"
+      ],
+      "reason": "Politically exposed person — senior procurement authority official under sanctions",
+      "listed_date": "2022-04-08",
+      "source": "Synthetic list (stands in for a consolidated screening feed)"
+    }
+  ],
+  "watchlist": [
+    {
+      "entity_id": "WAT-001",
+      "name": "Tervanix Logistics",
+      "schema": "Company",
+      "country": "Non-EU jurisdiction C",
+      "topics": [
+        "export_control"
+      ],
+      "reason": "Under review for potential export control violations — controlled-goods transshipment",
+      "listed_date": "2024-01-15",
+      "source": "Synthetic internal watchlist (Acme, fictional)"
+    },
+    {
+      "entity_id": "WAT-002",
+      "name": "Ostrimar Minerals",
+      "schema": "Company",
+      "country": "Norway",
+      "topics": [
+        "sanction_candidate"
+      ],
+      "reason": "Subsidiary of sanctioned parent company — pending formal designation",
+      "listed_date": "2024-06-01",
+      "source": "Synthetic list (stands in for a commercial screening feed)"
+    },
+    {
+      "entity_id": "WAT-003",
+      "name": "Dravene Robotics AS",
+      "schema": "Company",
+      "country": "Denmark",
+      "topics": [
+        "sanction_candidate"
+      ],
+      "reason": "Minority stake acquired by an entity pending formal designation — ownership under review, no findings against the vendor itself",
+      "listed_date": "2025-11-04",
+      "source": "Synthetic internal watchlist (Acme, fictional)"
+    }
+  ]
+}

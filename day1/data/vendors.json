@@ -1,0 +1,427 @@
+{
+  "_note": "SYNTHETIC / FICTIONAL data for the Acme Vendor Discoverability lab. Not real vendors or organizations. Created for the 3-day agent workshop. Consumed by the vendor discovery tools (get_vendor, filter_vendors, search_vendor_kb) and eval reference answers. Schema: {vendor_id: {name, vendor_id, category, country, certifications, contract_history, risk_level, compliance_flags, size, contact_email, page, highlights}}.",
+  "VND-001": {
+    "name": "Quelmore Systems Ltd",
+    "vendor_id": "VND-001",
+    "category": "Aerospace & Industrial",
+    "country": "Netherlands",
+    "certifications": [
+      "ISO 9001",
+      "AS9100D",
+      "Acme QS-100"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Acme",
+        "year": 2023,
+        "value_eur": 2400000,
+        "scope": "Avionics maintenance kits"
+      },
+      {
+        "buyer": "Tier-1 aerospace integrator",
+        "year": 2022,
+        "value_eur": 850000,
+        "scope": "Radar component supply"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "export_control_compliant",
+      "iso_27017_certified"
+    ],
+    "size": "mid",
+    "contact_email": "procurement@quelmore-synth.example",
+    "page": "quelmore_systems.md",
+    "highlights": "Established Acme supplier with QS-100 certification. Strong track record on avionics and radar components. Based in the Netherlands with EU export controls in place."
+  },
+  "VND-002": {
+    "name": "Norwick Aerospace GmbH",
+    "vendor_id": "VND-002",
+    "category": "Aerospace & Industrial",
+    "country": "Germany",
+    "certifications": [
+      "ISO 9001",
+      "AS9100D",
+      "ISO 27001",
+      "Acme QS-100"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Acme",
+        "year": 2024,
+        "value_eur": 5100000,
+        "scope": "Industrial inspection system components"
+      },
+      {
+        "buyer": "Commercial aviation operator",
+        "year": 2023,
+        "value_eur": 3200000,
+        "scope": "Navigation systems"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "export_control_compliant",
+      "iso_27017_certified",
+      "iso_27001_infosec"
+    ],
+    "size": "large",
+    "contact_email": "contracts@norwick-aero-synth.example",
+    "page": "norwick_aerospace.md",
+    "highlights": "Tier-1 industrial supplier with full ISO 27001 information security certification. Recent Acme contract for industrial inspection system components. Strong financial standing."
+  },
+  "VND-003": {
+    "name": "Draymast Cyber Solutions",
+    "vendor_id": "VND-003",
+    "category": "Cybersecurity & IT",
+    "country": "Estonia",
+    "certifications": [
+      "ISO 27001",
+      "SOC 2 Type II",
+      "ISO 9001"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Acme Cyber Security Centre",
+        "year": 2024,
+        "value_eur": 1200000,
+        "scope": "Threat intelligence platform"
+      },
+      {
+        "buyer": "Acme",
+        "year": 2023,
+        "value_eur": 680000,
+        "scope": "Security audit services"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "iso_27017_certified",
+      "iso_27001_infosec",
+      "acme_approved"
+    ],
+    "size": "small",
+    "contact_email": "partnerships@draymast-cyber-synth.example",
+    "page": "draymast_cyber.md",
+    "highlights": "Estonian cybersecurity specialist with Acme Cyber Security Centre partnership. SOC 2 Type II audited. Strong threat intelligence and security audit capabilities. Small but highly specialized."
+  },
+  "VND-004": {
+    "name": "Halvern Biotech Solutions",
+    "vendor_id": "VND-004",
+    "category": "Medical & Bio",
+    "country": "France",
+    "certifications": [
+      "ISO 13485",
+      "ISO 9001",
+      "GMP"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Acme",
+        "year": 2023,
+        "value_eur": 1800000,
+        "scope": "Field medical supplies"
+      },
+      {
+        "buyer": "Private healthcare group",
+        "year": 2022,
+        "value_eur": 450000,
+        "scope": "Diagnostic kits"
+      }
+    ],
+    "risk_level": "medium",
+    "compliance_flags": [
+      "export_control_compliant"
+    ],
+    "size": "mid",
+    "contact_email": "tenders@halvern-biotech-synth.example",
+    "page": "halvern_biotech.md",
+    "highlights": "Medical device manufacturer with ISO 13485 and GMP compliance. Previous Acme contract for field medical supplies. Medium risk due to supply chain dependencies on non-EU raw materials."
+  },
+  "VND-005": {
+    "name": "Cavenstor Logistics BV",
+    "vendor_id": "VND-005",
+    "category": "Logistics & Transport",
+    "country": "Netherlands",
+    "certifications": [
+      "ISO 9001",
+      "ISO 14001",
+      "ISO 28000"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Acme",
+        "year": 2024,
+        "value_eur": 3100000,
+        "scope": "Multimodal transport services"
+      },
+      {
+        "buyer": "Regional distribution network",
+        "year": 2023,
+        "value_eur": 1200000,
+        "scope": "Cold chain logistics"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "export_control_compliant",
+      "aeo_certified"
+    ],
+    "size": "large",
+    "contact_email": "acme@cavenstor-logistics-synth.example",
+    "page": "cavenstor_logistics.md",
+    "highlights": "supply-chain security certification (ISO 28000) with multimodal transport expertise. Active Acme contract for transport services. Strong cold chain and hazardous materials handling capabilities."
+  },
+  "VND-006": {
+    "name": "Skarloft Industries",
+    "vendor_id": "VND-006",
+    "category": "Aerospace & Industrial",
+    "country": "Canada",
+    "certifications": [
+      "AS9100D",
+      "ISO 9001"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Industrial equipment distributor",
+        "year": 2023,
+        "value_eur": 2200000,
+        "scope": "Thermal management systems"
+      }
+    ],
+    "risk_level": "medium",
+    "compliance_flags": [
+      "export_control_compliant"
+    ],
+    "size": "mid",
+    "contact_email": "international@skarloft-synth.example",
+    "page": "skarloft_industries.md",
+    "highlights": "Specialist in thermal management for industrial electronics. AS9100D certified but lacks Acme QS-100. No prior Acme contracts. Medium risk due to limited Acme experience and non-EU origin requiring export licensing."
+  },
+  "VND-007": {
+    "name": "Thalveyn Comms Group",
+    "vendor_id": "VND-007",
+    "category": "Cybersecurity & IT",
+    "country": "Norway",
+    "certifications": [
+      "ISO 27001",
+      "ISO 9001",
+      "Acme QS-100"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Acme",
+        "year": 2024,
+        "value_eur": 2700000,
+        "scope": "Secure field communications"
+      },
+      {
+        "buyer": "Telecommunications network operator",
+        "year": 2023,
+        "value_eur": 1500000,
+        "scope": "Encrypted radio systems"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "export_control_compliant",
+      "iso_27017_certified",
+      "iso_27001_infosec",
+      "acme_approved"
+    ],
+    "size": "mid",
+    "contact_email": "procurement@thalveyncomms-synth.example",
+    "page": "thalveyn_comms.md",
+    "highlights": "Norwegian secure communications specialist with Acme QS-100 and full security stack. Active Acme contract for field communications. Acme-approved personnel. Excellent fit for secure comms procurement."
+  },
+  "VND-008": {
+    "name": "Brimlock Construction SARL",
+    "vendor_id": "VND-008",
+    "category": "Infrastructure & Engineering",
+    "country": "Netherlands",
+    "certifications": [
+      "ISO 9001",
+      "ISO 14001"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Acme",
+        "year": 2022,
+        "value_eur": 950000,
+        "scope": "Facility renovation"
+      },
+      {
+        "buyer": "Commercial property developer",
+        "year": 2023,
+        "value_eur": 2100000,
+        "scope": "Infrastructure upgrade"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "export_control_compliant"
+    ],
+    "size": "mid",
+    "contact_email": "projects@brimlock-construction-synth.example",
+    "page": "brimlock_construction.md",
+    "highlights": "Netherlands-based construction firm with Acme facility experience. ISO 14001 environmental certification. Good for infrastructure and facility-related procurement needs."
+  },
+  "VND-009": {
+    "name": "Marnothe Electronics",
+    "vendor_id": "VND-009",
+    "category": "Cybersecurity & IT",
+    "country": "United Kingdom",
+    "certifications": [
+      "ISO 9001",
+      "ISO 27017"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Automotive manufacturing group",
+        "year": 2023,
+        "value_eur": 1100000,
+        "scope": "RF and signal-processing components"
+      }
+    ],
+    "risk_level": "medium",
+    "compliance_flags": [
+      "iso_27017_certified"
+    ],
+    "size": "small",
+    "contact_email": "sales@marnothe-synth.example",
+    "page": "marnothe_electronics.md",
+    "highlights": "UK-based RF and signal-processing component supplier. ISO 27017 certified but lacks ISO 27001. No prior Acme contracts. Medium risk: small company size and limited Acme procurement track record, though technically capable."
+  },
+  "VND-010": {
+    "name": "Perevane Manufacturing",
+    "vendor_id": "VND-010",
+    "category": "Aerospace & Industrial",
+    "country": "Italy",
+    "certifications": [
+      "ISO 9001",
+      "AS9100D",
+      "Acme QS-100",
+      "ISO 27001"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Acme",
+        "year": 2024,
+        "value_eur": 4300000,
+        "scope": "Heavy vehicle drivetrain spares"
+      },
+      {
+        "buyer": "Automotive manufacturing group",
+        "year": 2023,
+        "value_eur": 5600000,
+        "scope": "Precision actuator assemblies"
+      },
+      {
+        "buyer": "Acme",
+        "year": 2022,
+        "value_eur": 1900000,
+        "scope": "Maintenance support contract"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "export_control_compliant",
+      "iso_27017_certified",
+      "iso_27001_infosec",
+      "acme_approved"
+    ],
+    "size": "large",
+    "contact_email": "acme@perevane-synth.example",
+    "page": "perevane_manufacturing.md",
+    "highlights": "Major Italian industrial manufacturer with extensive Acme contract history (3 contracts, €11.8M total). Full certification stack including QS-100 and ISO 27001. Acme-approved. Top-tier supplier for aerospace and industrial procurement."
+  },
+  "VND-011": {
+    "name": "Yssric Environmental",
+    "vendor_id": "VND-011",
+    "category": "Infrastructure & Engineering",
+    "country": "Belgium",
+    "certifications": [
+      "ISO 14001",
+      "ISO 9001"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Regional distribution network",
+        "year": 2023,
+        "value_eur": 720000,
+        "scope": "Environmental remediation"
+      },
+      {
+        "buyer": "Automotive manufacturing group",
+        "year": 2022,
+        "value_eur": 380000,
+        "scope": "Site decontamination"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "export_control_compliant"
+    ],
+    "size": "small",
+    "contact_email": "info@yssric-env-synth.example",
+    "page": "yssric_environmental.md",
+    "highlights": "Environmental remediation specialist with Automotive manufacturing group experience. ISO 14001 certified. No direct Acme contracts but strong environmental compliance track record. Good fit for environmental/site remediation procurement."
+  },
+  "VND-012": {
+    "name": "Dravene Robotics AS",
+    "vendor_id": "VND-012",
+    "category": "Aerospace & Industrial",
+    "country": "Denmark",
+    "certifications": [
+      "ISO 9001",
+      "AS9100D",
+      "ISO 27001"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Automotive manufacturing group",
+        "year": 2024,
+        "value_eur": 1800000,
+        "scope": "Autonomous infrastructure inspection"
+      },
+      {
+        "buyer": "Acme",
+        "year": 2023,
+        "value_eur": 950000,
+        "scope": "Robotics maintenance contract"
+      }
+    ],
+    "risk_level": "low",
+    "compliance_flags": [
+      "export_control_compliant",
+      "iso_27001_infosec"
+    ],
+    "size": "mid",
+    "contact_email": "procurement@dravene-robotics-synth.example",
+    "page": "dravene_robotics.md",
+    "highlights": "Danish robotics specialist in autonomous infrastructure inspection systems. ISO 27001 certified. Has prior Acme contract for robotics maintenance. Strong candidate for autonomous systems and inspection-related procurement."
+  },
+  "VND-013": {
+    "name": "Kelbrant Trading Consortium",
+    "vendor_id": "VND-013",
+    "category": "Aerospace & Industrial",
+    "country": "Non-EU jurisdiction D",
+    "certifications": [
+      "ISO 9001"
+    ],
+    "contract_history": [
+      {
+        "buyer": "Domestic industrial conglomerate",
+        "year": 2021,
+        "value_eur": 5000000,
+        "scope": "Heavy vehicle components"
+      }
+    ],
+    "risk_level": "high",
+    "compliance_flags": [],
+    "size": "large",
+    "contact_email": "info@kelbrant-trading-synth.example",
+    "page": "kelbrant_trading.md",
+    "highlights": "state-linked industrial conglomerate. Appears on EU, US, and UK sanctions lists for restricted-goods trade. Not eligible for Acme procurement. Included in this dataset to demonstrate sanctions screening."
+  }
+}

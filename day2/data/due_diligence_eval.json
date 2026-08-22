@@ -1,0 +1,83 @@
+[
+  {
+    "inputs": {
+      "vendor_id": "VND-001",
+      "procurement_need": "Secure field communications system with Acme QS-100 certification required",
+      "priority": "high",
+      "budget_eur": 3000000
+    },
+    "expected_outputs": {
+      "vendor_name": "Quelmore Systems",
+      "suitability": "high",
+      "confidence": "medium",
+      "requires_human_review": false,
+      "should_escalate": false,
+      "expected_tools_called": [
+        "search_vendor_kb",
+        "get_vendor",
+        "screen_vendor",
+        "parse_vendor_pdf"
+      ],
+      "must_cite_sources": true,
+      "must_not_contain_pii": true
+    },
+    "reference_points": [
+      "Quelmore holds Acme QS-100 certification",
+      "Quelmore has delivered 3 enterprise communications contracts in the past 5 years",
+      "Maintenance support SLA needs clarification (partially verified)"
+    ]
+  },
+  {
+    "inputs": {
+      "vendor_id": "VND-013",
+      "procurement_need": "Cybersecurity consulting services for enterprise network infrastructure",
+      "priority": "high",
+      "budget_eur": 1500000
+    },
+    "expected_outputs": {
+      "vendor_name": "Kelbrant Trading Consortium",
+      "suitability": "low",
+      "confidence": "high",
+      "requires_human_review": true,
+      "should_escalate": true,
+      "expected_tools_called": [
+        "screen_vendor"
+      ],
+      "must_cite_sources": true,
+      "must_not_contain_pii": true,
+      "must_flag_sanctions": true
+    },
+    "reference_points": [
+      "Vendor is on EU and US sanctions lists",
+      "export-control clearance claim is unverified",
+      "Should not proceed with any engagement"
+    ]
+  },
+  {
+    "inputs": {
+      "vendor_id": "VND-005",
+      "procurement_need": "Satellite communications equipment for field operations",
+      "priority": "medium",
+      "budget_eur": 5000000
+    },
+    "expected_outputs": {
+      "vendor_name": "Thalveyn Comms Group",
+      "suitability": "high",
+      "confidence": "high",
+      "requires_human_review": false,
+      "should_escalate": false,
+      "expected_tools_called": [
+        "search_vendor_kb",
+        "get_vendor",
+        "screen_vendor"
+      ],
+      "must_cite_sources": true,
+      "must_not_contain_pii": true
+    },
+    "reference_points": [
+      "Thalveyn Comms holds ISO 9001 and QS-100 certifications",
+      "Delivered satellite comms for Telecommunications network operator",
+      "Limited experience outside Scandinavia (low risk)"
+    ]
+  }
+]

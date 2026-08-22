@@ -1,0 +1,18 @@
+{
+  "dependencies": [
+    ".."
+  ],
+  "graphs": {
+    "vendor_discovery_agent": "./src/vendor_discovery_graph.py:graph",
+    "vendor_discovery_agent_mem": "./src/vendor_discovery_graph.py:graph_with_memory",
+    "vendor_discovery_agent_hitl": "./src/vendor_discovery_graph.py:graph_hitl",
+    "vendor_discovery_agent_structured": "./src/vendor_discovery_graph.py:graph_structured",
+    "ticket_agent": "./src/ticket_agent_graph.py:graph",
+    "ticket_agent_mem": "./src/ticket_agent_graph.py:graph_with_memory",
+    "ticket_agent_hitl": "./src/ticket_agent_graph.py:graph_hitl",
+    "ticket_agent_structured": "./src/ticket_agent_graph.py:graph_structured",
+    "vendor_due_diligence_deep_agent": "../day2/src/deep_agent_factory.py:graph"
+  },
+  "env": "../.env",
+  "python_version": "3.13"
+}

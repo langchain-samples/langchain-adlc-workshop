@@ -1,0 +1,59 @@
+{
+  "risk_categories": {
+    "compliance": {
+      "description": "Regulatory and certification compliance",
+      "critical": ["Acme QS-100", "ISO 9001"],
+      "important": ["ISO 27001", "export control compliance"],
+      "optional": ["ISO 14001", "SOC 2"]
+    },
+    "financial": {
+      "description": "Financial stability and capacity",
+      "critical": ["audited financial statements"],
+      "important": ["revenue > EUR 10M", "positive cash flow"],
+      "optional": ["credit rating"]
+    },
+    "operational": {
+      "description": "Delivery capability and track record",
+      "critical": ["prior enterprise contracts"],
+      "important": ["relevant industry experience > 3 years", "adequate staffing"],
+      "optional": ["references from similar projects"]
+    },
+    "security": {
+      "description": "Security posture and data handling",
+      "critical": ["not on sanctions lists", "no PEP flags"],
+      "important": ["personnel vetting capability", "data protection compliance"],
+      "optional": ["penetration test reports"]
+    }
+  },
+  "risk_levels": {
+    "low": {
+      "description": "All critical criteria met, no red flags",
+      "action": "Proceed with standard procurement process"
+    },
+    "medium": {
+      "description": "Most critical criteria met, some gaps or concerns",
+      "action": "Proceed with additional scrutiny; request missing evidence"
+    },
+    "high": {
+      "description": "Critical criteria not met or significant red flags",
+      "action": "Escalate for human review; do not proceed without resolution"
+    },
+    "blocked": {
+      "description": "Vendor is sanctioned or otherwise prohibited",
+      "action": "Do not proceed. Report to compliance."
+    }
+  },
+  "scoring_rubric": {
+    "evidence_quality": {
+      "high": "Official documentation, verified certifications, audited records",
+      "medium": "Vendor self-reported data, dated but plausible claims",
+      "low": "Unattributed claims, marketing language, stale data"
+    },
+    "source_validation": {
+      "complete": "All claims verified against cited sources",
+      "partially_complete": "Most claims verified; some gaps noted",
+      "incomplete": "Many claims unverified; significant gaps",
+      "sanctions_hit": "Vendor found on sanctions list"
+    }
+  }
+}

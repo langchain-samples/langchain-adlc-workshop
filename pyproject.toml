@@ -1,0 +1,46 @@
+[project]
+name = "langchain-adlc-workshop"
+version = "0.1.0"
+description = "LangChain ADLC Workshop — ticket-resolution and vendor due-diligence agent labs."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    # Framework / runtime / harness
+    "langchain>=1.0",
+    "langchain-openai>=1.0",
+    # models.py documents an Anthropic path (ANTHROPIC_BASE_URL / anthropic:* model ids)
+    "langchain-anthropic>=1.0",
+    "langgraph>=1.0",
+    "langgraph-cli[inmem]>=0.1",
+    "deepagents>=0.6,<0.7",
+    # Lab tools: web research + RAG splitting + notebook async
+    "langchain-tavily>=0.1",
+    "langchain-text-splitters>=0.3",
+    "numpy>=1.26",
+    # Experiment result tables in day2 labs (langsmith ExperimentResults.to_pandas).
+    "pandas>=2.0",
+    # Tracing + evals. openevals/agentevals are the official LangChain evaluator libraries —
+    # prebuilt LLM-as-judge prompts, trajectory match modes, graph-trajectory evals, and the
+    # multi-turn simulation harness. Used by day2/src/06_deep_agent_evals.py.
+    "langsmith>=0.7",
+    "openevals>=0.2",
+    "agentevals>=0.0.9",
+    # MCP — day1/src/ticket_mcp_server.py is a real MCP server; the adapters turn its tools into
+    # LangChain tools so the same create_agent call works for local and remote tools alike.
+    "langchain-mcp-adapters>=0.3",
+    "mcp>=1.29",
+    # PDF parsing
+    "pypdf>=4.0",
+    # Notebooks + env
+    "jupyter>=1.0",
+    "jupytext>=1.16",
+    "python-dotenv>=1.0",
+    # PDF generation — day1/data/generate_pdfs.py builds the vendor capability statements
+    "reportlab>=4.0",
+]
+
+# Lean: this is a workshop package, not a distributable library. The labs put the repo root on
+# sys.path themselves, so `utils` and `day1.src.*` import cleanly whatever the checkout is named —
+# no build step and no package install required.
+[tool.uv]
+package = false
