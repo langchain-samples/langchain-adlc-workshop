@@ -877,8 +877,10 @@ print(ask(supervisor,
 # - `AGENTS.md` memory for always-relevant due diligence instructions
 # - `SKILL.md` / skills directory for reusable capabilities
 # - RubricMiddleware for runtime self-evaluation
-# - Wiki memory for durable, source-grounded notes — hand-rolled in Day 2 Lab 02, and
-#   productised as [OpenWiki](https://docs.langchain.com/oss/openwiki/overview)
+# - Wiki memory for durable, source-grounded notes — hand-rolled in Day 2 Lab 02 via `AGENTS.md` +
+#   filesystem tools. [OpenWiki](https://docs.langchain.com/oss/openwiki/overview) automates the
+#   *writing* of a wiki like this for codebase documentation; a consuming agent reads either kind
+#   the same way — through `AGENTS.md` and filesystem tools, not a special backend
 #
 # The supervisor pattern you just built is the manual version of what `create_deep_agent` automates.
 
@@ -922,6 +924,13 @@ print(ask(supervisor,
 # > `MultiServerMCPClient.get_tools()` returns ordinary LangChain tools, so a remote tool and a local
 # > one are indistinguishable to the agent. That is what makes MCP adoptable incrementally — you can
 # > move one tool behind a protocol without touching the agent loop.
+#
+# > ⚠️ **Running this section in a notebook?** MCP is async, and this file is written to also run as
+# > a plain script (`asyncio.run(...)`) — but Jupyter already has its own event loop running, so
+# > `asyncio.run(...)` raises `RuntimeError: asyncio.run() cannot be called from a running event
+# > loop`. **Fix: in the notebook, drop the `asyncio.run(...)` wrapper and just `await` the call
+# > directly** — e.g. `mcp_tools = asyncio.run(discover())` becomes `mcp_tools = await discover()`.
+# > Same swap applies to every `asyncio.run(...)` call in this section (4 total).
 
 # %%
 # The client spawns the server as a subprocess and speaks stdio — no port, no auth, no network.

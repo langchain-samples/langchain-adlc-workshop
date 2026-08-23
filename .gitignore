@@ -107,6 +107,9 @@ day1/data/*.db-journal
 
 # Delivery/presenter material — not workshop content.
 *.html
+*.pptx
+generate_slides.py
+utils/lc_brand.py
 
 # Agent-written outputs — the labs regenerate these, so they must not ship.
 # The two wiki seeds stay tracked so day2/data/wiki/ exists in a fresh clone;
