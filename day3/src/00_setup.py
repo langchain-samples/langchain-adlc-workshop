@@ -41,6 +41,10 @@ WORKSHOP = Path.cwd()
 while WORKSHOP != WORKSHOP.parent and not (WORKSHOP / "verify_setup.py").exists():
     WORKSHOP = WORKSHOP.parent
 sys.path.insert(0, str(WORKSHOP))
+# `day3/verify_setup.py` is a real file (a thin per-day wrapper around the root one), so the loop
+# above stops there instead of walking up to the true workshop root — one level short. Add the
+# parent too so `day1.src.*` / `utils.*` resolve regardless of which one the loop actually found.
+sys.path.insert(0, str(WORKSHOP.parent))
 
 from dotenv import find_dotenv, load_dotenv
 
