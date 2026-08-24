@@ -1,0 +1,16 @@
+day2/notebooks/00_setup.ipynb
+  h_0615fc48a2f10f 48-49
+day2/notebooks/01_deep_agent.ipynb
+  h_0615fc48a2f10f 24-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "7f191e06071493a5c050e672043994d95e21e4a6",
+  "prompts": {},
+  "humans": {
+    "h_0615fc48a2f10f": {
+      "author": "Avtar <118772076+avtarraikmo@users.noreply.github.com>"
+    }
+  }
+}
