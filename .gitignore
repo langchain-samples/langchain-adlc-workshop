@@ -108,6 +108,7 @@ day1/data/*.db-journal
 # Delivery/presenter material — not workshop content.
 *.html
 *.pptx
+*.png
 generate_slides.py
 utils/lc_brand.py
 

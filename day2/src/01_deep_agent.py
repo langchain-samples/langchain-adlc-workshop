@@ -27,9 +27,9 @@
 #     U[Procurement officer] -->|due diligence request| S[Supervisor deep agent]
 #     S -->|AGENTS.md always-on instructions| S
 #     S -->|SKILL.md evidence review workflow| S
-#     S -->|task()| EC[evidence_collector]
-#     S -->|task()| RA[risk_assessor]
-#     S -->|task()| CS[compliance_screener]
+#     S -->|task| EC[evidence_collector]
+#     S -->|task| RA[risk_assessor]
+#     S -->|task| CS[compliance_screener]
 #     EC --> KB[search_vendor_kb · parse_vendor_pdf · tavily_search]
 #     RA --> DB[get_vendor · filter_vendors · get_risk_criteria]
 #     CS --> SN[screen_vendor]
@@ -925,23 +925,24 @@ print(false_claim_result["messages"][-1].content)
 # The LangSmith sandbox needs no extra provider account: your existing `LANGSMITH_API_KEY` is enough.
 
 # %%
-# Live sandbox: create → execute → clean up. Skips cleanly if sandboxes are unavailable on your plan.
-def sandbox_demo() -> None:
+# Live sandbox: create + execute. Deliberately split from the cleanup cell below — pause here and
+# open LangSmith → Sandboxes to show `acme-dd-demo` listed as a real, live resource before deleting
+# it. Skips cleanly if sandboxes are unavailable on your plan.
+_sandbox = None
+_sandbox_client = None
+try:
+    from langsmith.sandbox import SandboxClient
+except ImportError:
+    print("⏭ this langsmith SDK has no sandbox module — upgrade langsmith to try it")
+else:
+    _sandbox_client = SandboxClient()
     try:
-        from langsmith.sandbox import SandboxClient
-    except ImportError:
-        print("⏭ this langsmith SDK has no sandbox module — upgrade langsmith to try it")
-        return
-
-    client = SandboxClient()
-    sandbox = None
-    try:
-        sandbox = client.create_sandbox(name="acme-dd-demo", wait_for_ready=True, timeout=180)
-        print("sandbox created:", sandbox.id)
+        _sandbox = _sandbox_client.create_sandbox(name="acme-dd-demo", wait_for_ready=True, timeout=180)
+        print("sandbox created:", _sandbox.id)
 
         from deepagents.backends.langsmith import LangSmithSandbox
 
-        sandbox_backend = LangSmithSandbox(sandbox=sandbox)
+        sandbox_backend = LangSmithSandbox(sandbox=_sandbox)
 
         # The `execute` tool the agent would get. Note it is a *different machine* — the vendor
         # fixtures are NOT here unless you copy them in, which is exactly the isolation you wanted.
@@ -951,16 +952,22 @@ def sandbox_demo() -> None:
     except Exception as e:
         print(f"⏭ sandbox unavailable ({type(e).__name__}: {str(e)[:120]})")
         print("   The lab continues on FilesystemBackend — nothing above depends on this cell.")
-    finally:
-        if sandbox is not None:
-            try:
-                client.delete_sandbox(sandbox.id)
-                print("sandbox deleted")
-            except Exception:
-                print("⚠ could not delete the sandbox — check Settings → Sandboxes in LangSmith")
 
+# %% [markdown]
+# **👉 Pause here.** Open LangSmith → Sandboxes and show `acme-dd-demo` listed as a live resource —
+# that's the actual proof this is a disposable, isolated VM, not just print output. Run the cleanup
+# cell below once you're done showing it.
 
-sandbox_demo()
+# %%
+# Clean up the sandbox created above — run this after showing it in the LangSmith UI.
+if _sandbox is not None:
+    try:
+        _sandbox_client.delete_sandbox(_sandbox.id)
+        print("sandbox deleted")
+    except Exception:
+        print("⚠ could not delete the sandbox — check Settings → Sandboxes in LangSmith")
+else:
+    print("no sandbox was created — nothing to clean up")
 
 # %% [markdown]
 # **Which backend for this agent?** Keep `FilesystemBackend` — the due diligence tools read committed

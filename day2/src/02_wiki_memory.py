@@ -552,16 +552,18 @@ for p in sorted(WIKI_DIR.rglob("*.md")):
     print(f"--- {p.relative_to(WIKI_DIR)} ({len(p.read_text())} chars) ---")
 
 # %% [markdown]
-# ## 9. Context Hub — managed context for production
+# ## 9. Context Hub — the SAME agent, a different backend, run live
 #
 # 📖 [Context engineering](https://docs.langchain.com/oss/python/deepagents/context-engineering)
 #
-# Everything above stores memory as **local files**. That's right for a workshop laptop and wrong for
-# production: no sharing across replicas, no access control, no versioning, no audit trail.
+# §1–§8 stored memory as **local files** via `FilesystemBackend`. That's right for a workshop laptop
+# and wrong for production: no sharing across replicas, no access control, no versioning, no audit
+# trail. Below, **we build and run the exact same agent again — same tools, same `SYSTEM_PROMPT`,
+# same wiki discipline — with only `backend=` changed**, to prove the swap is real, not a slide.
 #
 # **Context Hub** is the managed answer: agent context (AGENTS.md, skills, memory files) lives in a
 # **LangSmith Hub agent repo** — versioned (every write is a commit), shareable, and manageable from
-# the LangSmith UI/API. Deep Agents reads it through `ContextHubBackend`:
+# the LangSmith UI/API. Deep Agents reads and writes it through `ContextHubBackend`:
 #
 # ```python
 # from deepagents.backends import ContextHubBackend
@@ -575,7 +577,7 @@ for p in sorted(WIKI_DIR.rglob("*.md")):
 # )
 # ```
 #
-# | | `FilesystemBackend` (this lab) | `ContextHubBackend` (production) |
+# | | `FilesystemBackend` (§1–§8, above) | `ContextHubBackend` (§9, below — same lab, live) |
 # |---|---|---|
 # | Storage | Local disk | LangSmith Hub agent repo |
 # | Versioning | None (use git yourself) | Every write is a commit |
@@ -585,8 +587,220 @@ for p in sorted(WIKI_DIR.rglob("*.md")):
 # | Good for | Dev, workshop, single-node | Deployed agents, teams, audit |
 #
 # Migration is a one-line backend swap — the wiki pattern, the `AGENTS.md`, and the system-prompt
-# discipline are identical. That's the design lesson: **pick the memory *pattern* first; the storage
-# backend is interchangeable.**
+# discipline are identical. That's the design lesson, and the cells below prove it rather than just
+# claim it: **pick the memory *pattern* first; the storage backend is interchangeable.**
+#
+# > 💡 Uses `Client.agent_exists` / `push_agent` / `pull_agent` — the **public** `langsmith` API for
+# > Context Hub agent repos (verified against your installed SDK), not the underscore-prefixed
+# > internals. Safe to treat as a real pattern, not just a demo of the concept.
+
+# %%
+# **Who can run this.** `scoped(...)` suffixes the repo name with your `PARTICIPANT` initials (same
+# helper Day 1 Lab 04 uses for datasets), so every participant creates and pushes to their OWN Hub
+# repo — no shared-workspace collision, unlike the unscoped Prompt Hub name in Day 1 Lab 04. Anyone
+# with write access to this LangSmith workspace can run this cell; there is no presenter-only gate.
+#
+# **What gets READ vs WRITTEN below, explicitly:**
+# - **Read from Hub:** `AGENTS.md` (curated, human-written operating instructions — pushed once,
+#   read on every turn via `MemoryMiddleware`, same as the local-disk version in §3).
+# - **Written to Hub:** the agent's own `wiki/vendors/*.md` note — via its `write_file` tool,
+#   exactly the pattern from §5–§8, just backed by `ContextHubBackend` instead of local disk.
+# - **Never written:** `AGENTS.md` itself. It stays read-mostly here too (§3's rule) — the agent
+#   writes durable findings to the *wiki*, never to its own curated operating instructions.
+from day1.src.models import scoped
+
+CONTEXT_HUB_REPO = scoped("vendor-due-diligence-agent")
+SMITH_UI_BASE = os.getenv("LANGSMITH_UI_BASE", "https://smith.langchain.com")
+
+
+def _hub_repo_url() -> str:
+    """Browser link to the repo's landing page (not a specific commit) — where you'd go to view or
+    manually edit a file through the LangSmith UI, if your account's Context Hub UI supports it."""
+    workspace = os.getenv("LANGSMITH_WORKSPACE_ID")
+    base = f"{SMITH_UI_BASE}/context/{CONTEXT_HUB_REPO}"
+    return f"{base}?organizationId={workspace}" if workspace else base
+
+
+# %% [markdown]
+# **One-time setup — safe to re-run.** Checks whether your repo already exists before pushing, so
+# re-running this cell (e.g. after a kernel restart) never double-seeds or errors. Everything after
+# this cell assumes the repo already has an `AGENTS.md` in it.
+
+# %%
+try:
+    from langsmith import Client
+    from langsmith.schemas import FileEntry
+
+    from deepagents.backends import ContextHubBackend
+
+    ls_client = Client()
+    agents_md_text = (AGENT_DIR / "AGENTS.md").read_text()
+
+    if ls_client.agent_exists(CONTEXT_HUB_REPO):
+        print(f"repo '{CONTEXT_HUB_REPO}' already exists — skipping seed, nothing to do.")
+        print("(if you want to reset it back to the original AGENTS.md, re-run this cell after")
+        print(" deleting the repo's content in the LangSmith UI, or just push over it manually.)")
+    else:
+        commit_url = ls_client.push_agent(
+            CONTEXT_HUB_REPO,
+            files={"AGENTS.md": FileEntry(content=agents_md_text)},
+            description="Day 2 workshop — AGENTS.md seeded from day2/data/agent/",
+        )
+        print("seeded AGENTS.md to Context Hub:", commit_url)
+    print("repo page (view/edit in the browser):", _hub_repo_url())
+except Exception as e:
+    print(f"⏭ Context Hub unavailable ({type(e).__name__}: {str(e)[:150]})")
+
+# %% [markdown]
+# **Now the demo — this cell can be re-run freely, it never re-seeds anything.** Same tools + system
+# prompt as the local-disk `agent` in §5 — only `backend=` changes. This is the "one-line swap" the
+# comparison table above promises, shown for real, not just described.
+
+# %%
+try:
+    hub_backend = ContextHubBackend(CONTEXT_HUB_REPO)
+    hub_agent = create_deep_agent(
+        model=get_model(),
+        tools=[search_vendor_kb, get_vendor],
+        system_prompt=SYSTEM_PROMPT,
+        middleware=[MemoryMiddleware(backend=hub_backend, sources=["AGENTS.md"])],
+        backend=hub_backend,
+        name="context_hub_demo",
+    )
+
+    print("--- write: agent assesses Quelmore and persists its wiki note to Hub ---")
+    hub_thread = str(uuid7())
+    write_result = hub_agent.invoke(
+        {"messages": [{"role": "user", "content": (
+            "Assess Quelmore Systems (VND-001) for an avionics maintenance-kit procurement. "
+            "Gather certification evidence, classify risk, and record your findings."
+        )}]},
+        config={"configurable": {"thread_id": hub_thread}},
+    )
+    print(write_result["messages"][-1].content[:500])
+except Exception as e:
+    print(f"⏭ Context Hub unavailable ({type(e).__name__}: {str(e)[:150]})")
+    print("   No backup needed here — you already saw this exact write-back pattern on local disk")
+    print("   in §5-8 above (same tools, same SYSTEM_PROMPT, FilesystemBackend instead of Hub).")
+    print("   This cell only swaps the storage backend; nothing above depends on it succeeding.")
+
+# %% [markdown]
+# **Prove the write actually reached Hub, not just this process's memory.** Build a **completely
+# fresh** backend + agent object — no shared Python state with `hub_agent` above, only the Hub
+# repo name in common — and ask it to read the note back. If this succeeds, the wiki note is a real
+# commit in Context Hub, not something that only exists in this notebook's variables.
+
+# %%
+try:
+    fresh_backend = ContextHubBackend(CONTEXT_HUB_REPO)
+    fresh_agent = create_deep_agent(
+        model=get_model(),
+        middleware=[MemoryMiddleware(backend=fresh_backend, sources=["AGENTS.md"])],
+        backend=fresh_backend,
+        name="context_hub_fresh_read",
+    )
+    read_result = fresh_agent.invoke({"messages": [{"role": "user", "content":
+        "Read wiki/vendors/VND-001.md and quote its 'last reviewed' date and suitability verdict."}]})
+    print("read back from Context Hub, fresh process state:")
+    print(read_result["messages"][-1].content[:400])
+except Exception as e:
+    print(f"⏭ Context Hub unavailable ({type(e).__name__}: {str(e)[:150]})")
+
+# %% [markdown]
+# ### 9b. Change the context itself, watch the agent's behavior change
+#
+# Everything above proved the backend swap. This proves the actual point of *context*: edit
+# `AGENTS.md` — a curated, human-written operating instruction — and the agent's behavior changes on
+# the very next run, **with no code change and no re-deployment.** Same "edit → rerun → compare"
+# shape as Day 1 Lab 04's Prompt Hub demo, just for operating rules instead of a system prompt.
+#
+# We add one new rule: *"medium or high risk vendors always get a supply-chain-continuity follow-up
+# question"* — the exact idea Advanced exercise 2's option C already names. Halvern Biotech
+# Solutions (VND-004) is **medium risk**, so it's the right test case: the rule should visibly change
+# its follow-up questions, and should NOT fire for a low-risk vendor like Quelmore.
+
+# %%
+VND004_QUERY = (
+    "Assess Halvern Biotech Solutions (VND-004) for a lab-equipment supply contract. "
+    "List your recommended follow-up questions."
+)
+
+# %%
+try:
+    backend_before = ContextHubBackend(CONTEXT_HUB_REPO)
+    agent_before = create_deep_agent(
+        model=get_model(), tools=[search_vendor_kb, get_vendor], system_prompt=SYSTEM_PROMPT,
+        middleware=[MemoryMiddleware(backend=backend_before, sources=["AGENTS.md"])],
+        backend=backend_before,
+    )
+    before_result = agent_before.invoke({"messages": [{"role": "user", "content": VND004_QUERY}]})
+    print("=== BEFORE the rule change ===")
+    print(before_result["messages"][-1].content)
+except Exception as e:
+    print(f"⏭ Context Hub unavailable ({type(e).__name__}: {str(e)[:150]})")
+
+# %% [markdown]
+# **Now make the edit — pick EITHER path below, not both. Both land in the same place: a new commit
+# on the repo, which the AFTER cell (further down) pulls fresh regardless of how it got there.**
+#
+# **Path A — in the browser (the real "edit in the UI" motion, same shape as Day 1 Lab 04's Prompt
+# Hub demo):** open the repo page printed by the one-time-setup cell above, find `AGENTS.md`, and
+# append this as rule 8, then save/commit:
+#
+# ```
+# 8. **Follow-up depth** — for any vendor classified medium or high risk, always include a
+#    supply-chain-continuity follow-up question (e.g. single-source dependency, geographic
+#    concentration, financial stability) among the recommended follow-up questions.
+# ```
+#
+# **Path B — in code**, if the UI on your account doesn't expose an inline editor, or you'd rather
+# not context-switch live: run the cell below. Skip it entirely if you did Path A.
+
+# %%
+try:
+    NEW_RULE = (
+        "\n8. **Follow-up depth** — for any vendor classified medium or high risk, always include a "
+        "supply-chain-continuity follow-up question (e.g. single-source dependency, geographic "
+        "concentration, financial stability) among the recommended follow-up questions.\n"
+    )
+    updated_agents_md = agents_md_text.rstrip() + "\n" + NEW_RULE
+    edit_commit_url = ls_client.push_agent(
+        CONTEXT_HUB_REPO,
+        files={"AGENTS.md": FileEntry(content=updated_agents_md)},
+        description="Day 2 workshop — added supply-chain-continuity follow-up rule",
+    )
+    print("pushed AGENTS.md v2 to Context Hub (Path B):", edit_commit_url)
+except Exception as e:
+    print(f"⏭ Context Hub unavailable ({type(e).__name__}: {str(e)[:150]})")
+
+# %% [markdown]
+# **Pull the latest — this is the actual proof, and it doesn't care which path you took.** A
+# completely fresh agent, re-reading `AGENTS.md` from Hub right now. If you edited in the browser,
+# this is the first code that has seen your edit at all.
+
+# %%
+try:
+    backend_after = ContextHubBackend(CONTEXT_HUB_REPO)
+    agent_after = create_deep_agent(
+        model=get_model(), tools=[search_vendor_kb, get_vendor], system_prompt=SYSTEM_PROMPT,
+        middleware=[MemoryMiddleware(backend=backend_after, sources=["AGENTS.md"])],
+        backend=backend_after,
+    )
+    after_result = agent_after.invoke({"messages": [{"role": "user", "content": VND004_QUERY}]})
+    print("=== AFTER the rule change — same query, no code change ===")
+    print(after_result["messages"][-1].content)
+except Exception as e:
+    print(f"⏭ Context Hub unavailable ({type(e).__name__}: {str(e)[:150]})")
+    print("   No backup needed — the local FilesystemBackend agent (§5) demonstrates the same")
+    print("   AGENTS.md-drives-behavior idea; only the live edit-and-repush step is Hub-specific.")
+
+# %% [markdown]
+# **Say this explicitly — it's the actual teaching point of §9b:** "nothing about the agent's code
+# changed between those two runs. `agent_after` is built from the identical `create_deep_agent(...)`
+# call as `agent_before`. The only thing that changed is a markdown file — edited in the browser, or
+# pushed as a new Hub commit in code — and the very next invocation picked it up either way. That's
+# the entire value proposition of managing operating instructions in Context Hub instead of
+# hardcoding them into a Python prompt string: a policy change ships without a code deploy."
 #
 # > 🔗 Docs: [Deep Agents memory](https://docs.langchain.com/oss/python/deepagents/memory) ·
 # > [Context engineering](https://docs.langchain.com/oss/python/deepagents/context-engineering) ·
