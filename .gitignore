@@ -155,5 +155,6 @@ VALIDATION.md
 # MDA Lab
 vendor-due-diligence/
 
-# OpenWIki
+# OpenWiki
 openwiki
+.github/workflows/openwiki-update.yml
