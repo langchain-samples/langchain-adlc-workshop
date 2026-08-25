@@ -1,0 +1,14 @@
+.gitignore
+  h_0615fc48a2f10f 156
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "c0e2ecc29c64cb583cf981e1122c2cf48e2dc3fc",
+  "prompts": {},
+  "humans": {
+    "h_0615fc48a2f10f": {
+      "author": "Avtar <118772076+avtarraikmo@users.noreply.github.com>"
+    }
+  }
+}
