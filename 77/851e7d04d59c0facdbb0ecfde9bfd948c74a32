@@ -1,0 +1,16 @@
+.gitignore
+  h_0615fc48a2f10f 153-156
+day3/notebooks/02_managed_deep_agents.ipynb
+  h_0615fc48a2f10f 264-265,281-282
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.24",
+  "base_commit_sha": "77851e7d04d59c0facdbb0ecfde9bfd948c74a32",
+  "prompts": {},
+  "humans": {
+    "h_0615fc48a2f10f": {
+      "author": "Avtar <118772076+avtarraikmo@users.noreply.github.com>"
+    }
+  }
+}
