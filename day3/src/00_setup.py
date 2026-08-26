@@ -37,14 +37,21 @@
 import sys
 from pathlib import Path
 
-WORKSHOP = Path.cwd()
-while WORKSHOP != WORKSHOP.parent and not (WORKSHOP / "verify_setup.py").exists():
-    WORKSHOP = WORKSHOP.parent
+
+def _find_workshop_root(start: Path) -> Path:
+    """Walk up from `start` looking for the directory that holds both `day1/` and `utils/` — the
+    actual workshop root. Checking for those two directories (rather than a filename like
+    `verify_setup.py`) is deliberate: `day3/verify_setup.py` is a real file too, a thin per-day
+    wrapper, so a filename-based check stops one level short of the true root and every path built
+    from `WORKSHOP` afterward (not just imports) silently points at the wrong place."""
+    for cand in (start.resolve(), *start.resolve().parents):
+        if (cand / "day1").is_dir() and (cand / "utils").is_dir():
+            return cand
+    raise FileNotFoundError("Could not locate the workshop root (the directory holding day1/ and utils/).")
+
+
+WORKSHOP = _find_workshop_root(Path.cwd())
 sys.path.insert(0, str(WORKSHOP))
-# `day3/verify_setup.py` is a real file (a thin per-day wrapper around the root one), so the loop
-# above stops there instead of walking up to the true workshop root — one level short. Add the
-# parent too so `day1.src.*` / `utils.*` resolve regardless of which one the loop actually found.
-sys.path.insert(0, str(WORKSHOP.parent))
 
 from dotenv import find_dotenv, load_dotenv
 
